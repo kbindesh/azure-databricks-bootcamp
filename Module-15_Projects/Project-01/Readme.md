@@ -42,8 +42,11 @@
 ## Step-XX: Upload the Datasets
 
 - Refer to the [datasets](./datasets) folder of this module to get all the relevant datasets.
+- Upload all the files to Azure Data Lake Storage _raw_ container we created in the last step.
 
 ## Step-XX: Create a Service Principal for Azure Databricks to authenticate
+
+## Step-XX: Authorize the Service Principal to access ADLS objects (RBAC)
 
 ## Step-XX: Create an Azure Key Vault for storing secrets
 
@@ -73,6 +76,11 @@ https://adb-4169435311569004.4.azuredatabricks.net/?o=4169435311569004#secrets/c
 ### 3.1 Create a Notebook to mount the dataset from ADLS to DBFS (using service principal)
 
 - Navigate to your Azure Databricks workspace >> Create a new folder "proj-01-nbs" >> New Notebook
+- For notebook code, kindly refer [mount-adls-container-ondbfs.ipynb](./notebooks/mount-adls-container-ondbfs.ipynb) notebook from _notebooks_ folder of this module.
+
+### 3.2 Create a Notebook to ingest the .csv dataset
+
+- Navigate to your Azure Databricks workspace >> Select folder "proj-01-nbs" >> New Notebook
 - For notebook code, kindly refer [mount-adls-container-ondbfs.ipynb](./notebooks/mount-adls-container-ondbfs.ipynb) notebook from _notebooks_ folder of this module.
 
 ## Step-XX: Creating Azure Databricks Workflow
