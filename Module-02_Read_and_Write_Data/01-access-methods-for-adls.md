@@ -23,9 +23,9 @@ display(spark.read.csv("abfss://<container_name>@<storage_account_name>.dfs.core
 - Declare & initialize variables for storing service principal details:
 
 ```
-client_id = "c146c1f1-054d-4b77-9f52-aeca2d676162"
-tenant_id = "9c4a41ad-d09b-421f-892f-e9748f2d44da"
-client_secret = "~Jt8Q~WjRR49EHCATnHqz1wdf0mLdCSo~WI.uaAP"
+client_id = dbutils.secrets.get(scope="project1-scope",key="clientid")
+tenant_id = dbutils.secrets.get(scope="project1-scope",key="tenantid")
+client_secret = dbutils.secrets.get(scope="project1-scope",key="clientsecret")
 storage_account = "databrickslabsadls"
 ```
 
