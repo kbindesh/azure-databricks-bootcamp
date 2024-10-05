@@ -44,13 +44,65 @@
 - Refer to the [datasets](./datasets) folder of this module to get all the relevant datasets.
 - Upload all the files to Azure Data Lake Storage _raw_ container we created in the last step.
 
-## Step-XX: Create a Service Principal for Azure Databricks to authenticate
+## Step-XX: Create and Configure `Service principal` for Azure Databricks
+
+### Register a new App (service principal)
+
+- Azure Portal >> Microsoft Entra ID >> Under **Manage** section, select **App Registrations**
+- Click New Registrations
+
+  - **Name**:
+  - **Who can use this application or access this API?**: Accounts in this organizational directory only (Default Directory only - Single tenant)
+  - Click on **Register** button
+
+- **IMP**: Copy the following information about the application, as we'll need it in later steps.:
+  - **Client ID (App ID)**
+  - **Tenant ID**
+
+### Generate the `Client secret` for the App
+
+- **Microsoft Entra ID** >> **Manage** >> **App Registrations** >> Select **All application** tab >> Select your application
+- From the left-side panel, expand Manage section >> Certificates & Secrets
+- Select the **Client secrets** tab >> **New client secret**
+  - Description
+  - Expires: 180 days
+- - **IMP**: Copy the client secret and store it at a safe place. We'll need it in later steps.
 
 ## Step-XX: Authorize the Service Principal to access ADLS objects (RBAC)
 
+- Navigate to the **Storage Accounts** service >> select the storage account that we created for our datasets in Step#3.
+- Select Access Control (IAM) >> Add >> Add Role Assignment
+- **Role** tab
+  - select Job functions role tab >> select Storage Data Blob Contributor >> Next
+- **Members** tab
+  - Selected role:
+  - Assign access to: <select_the_sp_created_in_last_step>
+- **Conditions** tab: <leave_to_defaults>
+- **Review and Create**
+
 ## Step-XX: Create an Azure Key Vault for storing secrets
 
+- Azure portal >> **Key Vaults** >> Click on **Create** button
+- **Basics** tab
+  - Subscription
+  - Resource group
+  - Key vault name: databricks-labs-vault
+  - Region: US East
+  - Pricing Tier: Standard
+  - Days to retain deleted vaults: 7
+  - Purge protection: Disable
+- **Access Configuration** tab
+  - Permission model: Vault access policy
+- **Networking** tab
+
+  - Enable public access: Enable
+  - Allow access from: All Networks
+
+- **Review & Create**
+
 ## Step-XX: Upload the secrets (service principal) in Azure Key Vault
+
+- Select the Azure Key Vault you created in the preceding step >> Expand **Objects** section >> **Secrets**
 
 - Create three secrets in azure key vault, for:
   1. service principal **client_id**
@@ -59,9 +111,16 @@
 
 ## Step-XX: Create an Azure Databricks workspace and Cluster
 
-- Navigate to Azure Portal >> Azure Databricks
+- Navigate to Azure Portal >> **Azure Databricks** >> **Create**
+- **Basics** tab
+  - Workspace name: adb-workspace
+  - Region: East US
+  - Pricing Tier: Trial
+  - Managed Resource Group name:
+- Leave the Networking, Encryption, Security & Compliance tab values to defaults
+- **Review & Create**
 
-## Step-XX: Create a secret scope for Databricks cluster
+## Step-XX: Create a Secret scope for Databricks cluster
 
 - This secret scope will be used for authentication databricks to access ADLS data.
 - To create secret scope, kindly navigate to the following link:
