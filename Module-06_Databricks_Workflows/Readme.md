@@ -117,5 +117,38 @@ v_input_text
 - Now, you can use the above variable anywhere in your logic
 
 ```
-new_df = old_df.withColumnRenamed("newColName", v_input_text)
+new_df = old_df.withColumnRenamed("newColName", lit(v_input_text))
 ```
+
+## 07. Notebook Workflows
+
+- Use notebook utility | dbutils.notebook
+
+```
+# Get help
+dbutils.notebook.help()
+
+[run and exit function]
+```
+
+### 7.1: Invoke other notebooks from the master notebook
+
+- Create a new notebook i.e master-ingest-all-notebooks
+
+```
+response = dbutils.notebook.run("notebook_name", 0, {"notebook1": "col_value"})
+
+[Should call notebook1 and execute it]
+```
+
+- In order to return some exit code after execution of the notebook1, add following statement:
+
+```
+dbutils.notebook.exit("Notebook1 executed successfully..")
+```
+
+- Invoke all other notebooks also into the same master notebook as we did for notebook1
+
+## 08. Databricks Jobs
+
+- Navigate to Job Runs >> Create new job
